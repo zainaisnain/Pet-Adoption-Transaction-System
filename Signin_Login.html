@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <body>
 <head>
+<meta charset = "UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+<meta  name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Francois+One&family=Patua+One&family=Press+Start+2P&family=Secular+One&display=swap');
 @import url("https://fonts.googleapis.com/css?family=Poppins");
 
 body {
@@ -31,7 +33,7 @@ body {
   min-height: 590px;
   position: relative;
   margin-top: 100px;
-  background: url(pexels-blue-bird-7210698.jpg)
+  background: url(pexels-blue-bird-7210698.jpg) 
     no-repeat center;
   background-size: cover;
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
@@ -47,7 +49,7 @@ body {
   background: linear-gradient( 
     45deg,
   rgba(31,34,102, 0.91),
-    rgba(255, 220, 117, 0.100)
+    rgba(255, 203, 46, 0.219)
   );
 }
 .Login-form,
@@ -81,6 +83,7 @@ body {
   display: inline-block;
   border-bottom: 2px solid transparent;
   cursor: pointer;
+  font-family: 'Francois One', sans-serif;
 }
 .Login-btn:checked + .tab,
 .Signup-btn:checked + .tab {
@@ -101,11 +104,12 @@ body {
 }
 .group span{
   display: block;
-  padding: 2px 5px;
-  color: rgb(255, 0, 0);
+  padding: 5px 5px;
+  color: #FD1C03;
+  text-shadow: 1px 1px #000000;
   font-weight:bold;
-  font-style:oblique;
   font-size:11px;
+ 
 }
 
 .label,
@@ -234,7 +238,7 @@ body {
   vertical-align: middle;
   border: none;
   width:190px;
-  padding: 10px 10px;
+  padding: 5px 5px;
   border-radius: 25px;
   background: linear-gradient(
     90deg,
@@ -284,9 +288,6 @@ body {
   animation: gradForw 300ms ease-in-out forwards;
 }
 
-
-
-
   </style>
 </head>
 <body>
@@ -305,7 +306,7 @@ body {
                   
                 </div>
                 <div class="group">
-                    <input id="password" type="password" class="input" data-type="password" name="password" placeholder="Password" required>
+                    <input id="password1" type="password" class="input" data-type="password" name="password1" placeholder="Password" required>
                     
                   </div>
                 <div class="group">
@@ -321,41 +322,42 @@ body {
                 </div>
             </div>
             </form>
-             <form method="post" action="#">
+             <form method="Get">
             <div class="Signup-form">
                 <div class="group">
                     <div class="input-w">
-                      <input type="text" id="firstname" name="firstname" placeholder="First name" required>
-                      <input type="text" id="lastname" name="lastname" placeholder="Last name " required >
+                      <input type="text" id="firstname"  placeholder="First name" name="firstname" required >
+                      <input type="text" id="lastname" placeholder="Last name " name="lastname" required >
                       </div>
                 </div>
                 <div class="group">
                     <div class="input-w">
                       <input type="text" id="contactnumumber" name="contactnumber" placeholder="Contact Number" required>
-                      <input type="text" id="email" name="email" placeholder="Email" required>
+                      <input type="text" id="email" name="email" placeholder="Email" required >
                       </div>
                 </div>
                 <div class="group">    
                   <div class="select-w">
                      <label for="birthday" class="label">Date of Birt</label>
-                     <input type="date" id="birthday" name="birthday" required>
-                     <select>
+                     <input type="date" id="birthday" name="birthday" required >
+                     <select name="gender" id="gender" required>
                         <option value="gender" disabled selected hidden>Gender</option>  
                         <option value="female">Female</option>
                         <option value="male">Male</option>
                       </select>                  
                     </div>
                     </div>
-                <div class="group">
-                    <input id="password" type="password" class="input" placeholder="Enter your password" name="password" required>
+                <div class="group" >
+                    <input style="padding: 5px 5px" id="password" type="password" class="input" placeholder="Enter your password" name="password" required>
                 </div>
-                <div class="group">                
-                    <input id="confirm_password"  type="password" class="input"  placeholder="Confirm Password" name="confirm_password" required>
-                    <!-- <span>password you entered did not match</span> -->
+                <div class="group" >                
+                    <input style="padding: 5px 5px" id="confirm_password"  type="password" class="input"  placeholder="Confirm Password" name="confirm_password" required>
+                    <span>Password do not match</span>
                   </div>
                 <div class="group">
-                    <input style="padding-top:2%;" type="submit" class="button" value="Sign Up" name="submit">
+                    <input style="padding: 5px 5px;" type="submit" name="signin" class="button" value="SIGN UP">
                 </div>
+
                 <div class="term">
                   <input type="checkbox" id="terms" name="terms" value="terms" required>
                   <label for="terms">I accept the terms and codition for signing up to this service, and hereby &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp confirm I have read the privacy polociy</label><br>
@@ -366,12 +368,48 @@ body {
                 </div>
             </div>
              </form>
+<script>
+var $password = $("#password");
+var $confirmPassword = $("#confirm_password");
+//Hide hints
+$("span").hide();
+function arePasswordsMatching() {
+  return $password.val() === $confirmPassword.val();
+}
+function canSubmit() {
+  return isPasswordValid() && arePasswordsMatching();
+}
+function passwordEvent(){
+    //Find out if password is valid  
+    if(isPasswordValid()) {
+      //Hide hint if valid
+      $password.next().hide();
+    } else {
+      //else show hint
+      $password.next().show();
+    }
+}
+function confirmPasswordEvent() {
+  //Find out if password and confirmation match
+  if(arePasswordsMatching()) {
+    //Hide hint if match
+    $confirmPassword.next().hide();
+  } else {
+    //else show hint 
+    $confirmPassword.next().show();
+  }
+}
+function enableSubmitEvent() {
+  $("#sigin").prop("disabled", !canSubmit());
+}
+//When event happens on password input
+$password.focus(passwordEvent).keyup(passwordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
+//When event happens on confirmation input
+$confirmPassword.focus(confirmPasswordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
+enableSubmitEvent();
+</script>		
         </div>
         </div>     
     </div>
-
 </body>
-
 </html>
-
-
