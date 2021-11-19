@@ -303,6 +303,8 @@ include_once 'dbh/dbh_conn.php';
         <input id="tab-2" type="radio" name="tab" class="Signup-btn">
         <label for="tab-2" class="tab">Sign up</label>
         <div class="forms-wrap">
+
+
             <form method="post" action="#">
                 <div class="Login-form">
                     </br></br>
@@ -311,7 +313,7 @@ include_once 'dbh/dbh_conn.php';
 
                     </div>
                     <div class="group">
-                        <input id="password1" type="password" class="input" data-type="password" name="password1" placeholder="Password" required>
+                        <input id="login_password" type="password" class="input" data-type="password" name="login_password" placeholder="Password" required>
 
                     </div>
                     <div class="group">
@@ -420,6 +422,31 @@ include_once 'dbh/dbh_conn.php';
                     }
                 }
 
+            }
+
+            if(isset($_POST['login'])) {
+                $username = $_POST['username'];
+                $password = $_POST['login_password'];
+
+                if($username !='' && $password!=''){
+                    $query="select * from user_info where username='".$username."' and user_password='".$password."'";
+
+                    $result=mysqli_query($conn,$query);
+
+                    if(!$result)
+                        die("Query Failed: " .  mysqli_error($conn));
+                    else{
+                        if(mysqli_num_rows($result)>0) {
+                            echo "succesfully logged in";
+                        }
+                        else {?>
+                            <script>
+                                alert("Invalid Username or Password");
+                            </script>
+                            <?php
+                        }
+                    }
+                }
             }
 
 
