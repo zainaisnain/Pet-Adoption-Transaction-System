@@ -63,8 +63,8 @@ $admin_sql = "CREATE TABLE admin_info (
                     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                     )";
 
-if ($conn->query($pet_sql) || $conn->query($admin_sql)  === TRUE) {
-    echo "Tables created successfully!";
+if ($conn->query($user_sql) == TRUE) {
+    echo "user_info table created successfully!";
 } else {
     echo "Error creating user_info table: " . $conn->error;
 }
