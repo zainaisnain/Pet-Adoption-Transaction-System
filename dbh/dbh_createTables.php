@@ -72,6 +72,24 @@ $donations_sql = "CREATE TABLE donations (
                     recipient VARCHAR(150)
                     )";
 
+$adoption_sql = "CREATE TABLE adoption_table (
+                    firstname VARCHAR(150) NOT NULL,
+                    lastname VARCHAR(150) NOT NULL,
+                    address VARCHAR(350),
+                    phone_number VARCHAR(11),
+                    email VARCHAR(150),
+                    province VARCHAR(150),
+                    barangay VARCHAR(150),
+                    zipcode VARCHAR(150),
+                    status VARCHAR(150),
+                    gender VARCHAR(150),
+                    occupation VARCHAR(150),
+                    first_time VARCHAR(10),
+                    any_pets VARCHAR(10),
+                    reason VARCHAR(350),
+                    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    )";
+
 if ($conn->query($pet_sql) || $conn->query($admin_sql)  === TRUE) {
     echo "Tables created successfully!";
 } else {
@@ -95,6 +113,11 @@ if ($conn->query($donations_sql) === TRUE) {
     echo "Error creating donations table: " . $conn->error;
 }
 
+if ($conn->query($adoption_sql) === TRUE) {
+    echo "adoption table created successfully!";
+} else {
+    echo "Error creating adoption table: " . $conn->error;
+}
 
 $conn->close();
 
