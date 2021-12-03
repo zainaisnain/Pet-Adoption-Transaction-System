@@ -27,14 +27,14 @@ include_once 'dbh/dbh_conn.php';
             </tr>
             <tr>
                 <td>User ID:</td>
-                <td><input type="text" name="userid"></td>
+                <td><input type="numeric" name="userid"></td>
             </tr>
             <th>
                 PET'S INFORMATION
             </th>
             <tr>
                 <td>Pet ID:</td>
-                <td><input type="text" name="petid"></td>
+                <td><input type="numeric" name="petid"></td>
             </tr>
 
         </table>
@@ -58,38 +58,37 @@ if(isset($_GET['submit'])) {
 
     $userCheck = $conn -> query("select user_id from user_info where user_id = '$user_id';");
     $petCheck = $conn -> query("select pet_id from pet_info where pet_id = '$pet_id';");
-    $is_adopted_check = $conn -> query("select is_adopted from pet_info where is_adopted = 'no';");
-    $user_name_check = $conn -> query("select first_name from user_info where user_id = '$user_id';");
-    
-    if($is_adopted_check->num_rows > 0) {
+    $is_adopted_check = $conn -> query("select is_adopted from pet_info where is_adopted = 'no' AND pet_id = '$pet_id';");
+    $user_name_check = $conn -> query("select user_id from user_info where user_id = '$user_id' AND firstname='$fname';");
+
         if($userCheck->num_rows > 0) {
-            if($user_name_check == $fname) {
+            if($user_name_check->num_rows > 0) {
                 if($petCheck->num_rows > 0) {
-                    $sql = "INSERT INTO adoption_info (firstname, lastname, user_id, pet_id)
-                            VALUES ('$fname', '$lname',  '$user_id', '$pet_id');";
-                    if($conn->query($sql) == TRUE) {
-                        $alter_status = $conn -> query("UPDATE pet_info
-                        SET is_adopted = 'yes', adopter = '$fname' 
-                        WHERE pet_id = '$pet_id';");
+                    if($is_adopted_check->num_rows > 0) {
+                        $sql = "INSERT INTO adoption_info (firstname, lastname, user_id, pet_id)
+                           VALUES ('$fname', '$lname',  '$user_id', '$pet_id');";
+                        if($conn->query($sql) == TRUE) {
+                            $alter_status = $conn -> query("UPDATE pet_info
+                            SET is_adopted = 'yes', adopter = '$fname' 
+                            WHERE pet_id = '$pet_id';");
                             echo '<script>alert("Thank you for adopting")</script>';
                             // echo "Thank you for adopting";
-                    }
+                        }
+                    }else {
+                            echo '<script>alert("Pet already adopted")</script>';
+                            // echo "Pet already adopted";
+                        }
                 } else {
-                    echo '<script>alert("Pet not found")</script>';
-                    // echo "Pet not found";
+                    echo "Pet not found";
                 }
-            }else {
-                echo '<script>alert("name does not match user id")</script>';
-                // echo "name does not match user id";
+            }else{
+                echo "name does not match. Please check name.";
             }
         } else {
-            echo '<script>alert("User does not exist. Please sign up first.")</script>';
-            // echo "User does not exist. Please sign up first.";
+            // echo '<script>alert("User does not exist. Please sign up first.")</script>';
+            echo "User does not exist. Please sign up first.";
         }
-    }else {
-        echo '<script>alert("Pet already adopted")</script>';
-        // echo "Pet already adopted";
-    }
+
 
     
     
