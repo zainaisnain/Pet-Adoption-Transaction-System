@@ -87,7 +87,7 @@ $adoption_sql = "CREATE TABLE adoption_table (
                     first_time VARCHAR(10),
                     any_pets VARCHAR(10),
                     reason VARCHAR(350),
-                    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                     )";
 
 if ($conn->query($pet_sql) || $conn->query($admin_sql)  === TRUE) {
