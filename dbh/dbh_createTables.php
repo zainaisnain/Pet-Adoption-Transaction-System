@@ -15,11 +15,11 @@ if ($conn->connect_error) {
 
 //sql to create table
 $user_sql = "CREATE TABLE user_info (
-                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    user_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                     firstname VARCHAR(150) NOT NULL,
                     lastname VARCHAR(150) NOT NULL,
                     birthday DATE,
-                    gender VARCHAR(15 0),
+                    gender VARCHAR(150),
                     address VARCHAR(350),
                     phone_number VARCHAR(11),
                     email VARCHAR(150),
@@ -28,17 +28,19 @@ $user_sql = "CREATE TABLE user_info (
                     reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                     )";
 
-$pet_sql = "CREATE TABLE animal_info (
+$pet_sql = "CREATE TABLE pet_info (
                     pet_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                     pet_name VARCHAR(150) NOT NULL,
                     animal VARCHAR(150),
                     breed VARCHAR(150),
                     age INT(2),
                     sex VARCHAR(6),
+                    is_adopted VARCHAR(6),
+                    adopter VARCHAR(150),
                     size VARCHAR(50),
                     color VARCHAR(150),
                     needs_category VARCHAR(50), 
-                    reg_date DATE,
+                    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                     affectionate INT(3),
                     playful INT(3),
                     friendly INT(3), 
@@ -47,7 +49,7 @@ $pet_sql = "CREATE TABLE animal_info (
                     )";
 
 $admin_sql = "CREATE TABLE admin_info (
-                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    admin_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                     firstname VARCHAR(150) NOT NULL,
                     lastname VARCHAR(150) NOT NULL,
                     birthday DATE,
@@ -72,25 +74,15 @@ $donations_sql = "CREATE TABLE donations (
                     recipient VARCHAR(150)
                     )";
 
-$adoption_sql = "CREATE TABLE adoption_table (
+$adoption_sql = "CREATE TABLE adoption_info (
                     firstname VARCHAR(150) NOT NULL,
                     lastname VARCHAR(150) NOT NULL,
-                    address VARCHAR(350),
-                    phone_number VARCHAR(11),
-                    email VARCHAR(150),
-                    province VARCHAR(150),
-                    barangay VARCHAR(150),
-                    zipcode VARCHAR(150),
-                    status VARCHAR(150),
-                    gender VARCHAR(150),
-                    occupation VARCHAR(150),
-                    first_time VARCHAR(10),
-                    any_pets VARCHAR(10),
-                    reason VARCHAR(350),
-                    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                    user_id INT(6) UNSIGNED,
+                    pet_id INT(6) UNSIGNED,
+                    adoption_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                     )";
 
-if ($conn->query($pet_sql) || $conn->query($admin_sql)  === TRUE) {
+if ($conn->query($user_sql)  === TRUE) {
     echo "Tables created successfully!";
 } else {
     echo "Error creating user_info table: " . $conn->error;
